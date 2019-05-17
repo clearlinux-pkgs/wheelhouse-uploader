@@ -4,7 +4,7 @@
 #
 Name     : wheelhouse-uploader
 Version  : 0.10.1
-Release  : 1
+Release  : 2
 URL      : https://files.pythonhosted.org/packages/26/d8/e7f674cca65c1abb6e5c1f6d5c724816316e7048eed5d2fdd817fb9e694f/wheelhouse-uploader-0.10.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/26/d8/e7f674cca65c1abb6e5c1f6d5c724816316e7048eed5d2fdd817fb9e694f/wheelhouse-uploader-0.10.1.tar.gz
 Summary  : Upload wheels to any cloud storage supported by Libcloud
@@ -24,6 +24,7 @@ BuildRequires : futures
 BuildRequires : packaging
 BuildRequires : setuptools
 BuildRequires : setuptools-markdown
+Patch1: deps.py
 
 %description
 wheelhouse-uploader
@@ -51,13 +52,14 @@ python3 components for the wheelhouse-uploader package.
 
 %prep
 %setup -q -n wheelhouse-uploader-0.10.1
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557537049
+export SOURCE_DATE_EPOCH=1558116660
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
 export FFLAGS="$CFLAGS -fno-lto "
