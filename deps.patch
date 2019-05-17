@@ -1,0 +1,22 @@
+--- wheelhouse-uploader-0.10.1/setup.py~	2018-07-03 13:57:45.000000000 +0000
++++ wheelhouse-uploader-0.10.1/setup.py	2019-05-17 18:09:19.848311253 +0000
+@@ -30,7 +30,7 @@
+         "certifi",
+         'futures; python_version == "2.7"',
+         # https://github.com/ogrisel/wheelhouse-uploader/issues/29
+-        "apache-libcloud==2.2.1",
++        "apache-libcloud",
+     ],
+     long_description_markdown_filename='README.md',
+     classifiers=[
+--- wheelhouse-uploader-0.10.1/wheelhouse_uploader.egg-info/requires.txt~	2018-07-03 13:59:13.000000000 +0000
++++ wheelhouse-uploader-0.10.1/wheelhouse_uploader.egg-info/requires.txt	2019-05-17 18:09:36.426311023 +0000
+@@ -1,7 +1,7 @@
+ setuptools>=0.9
+ packaging
+ certifi
+-apache-libcloud==2.2.1
++apache-libcloud
+ 
+ [:python_version == "2.7"]
+ futures
