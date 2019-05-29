@@ -4,7 +4,7 @@
 #
 Name     : wheelhouse-uploader
 Version  : 0.10.1
-Release  : 3
+Release  : 4
 URL      : https://files.pythonhosted.org/packages/26/d8/e7f674cca65c1abb6e5c1f6d5c724816316e7048eed5d2fdd817fb9e694f/wheelhouse-uploader-0.10.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/26/d8/e7f674cca65c1abb6e5c1f6d5c724816316e7048eed5d2fdd817fb9e694f/wheelhouse-uploader-0.10.1.tar.gz
 Summary  : Upload wheels to any cloud storage supported by Libcloud
@@ -14,23 +14,32 @@ Requires: wheelhouse-uploader-python = %{version}-%{release}
 Requires: wheelhouse-uploader-python3 = %{version}-%{release}
 Requires: apache-libcloud
 Requires: certifi
-Requires: futures
 Requires: packaging
 Requires: setuptools
 BuildRequires : apache-libcloud
 BuildRequires : buildreq-distutils3
 BuildRequires : certifi
-BuildRequires : futures
 BuildRequires : packaging
 BuildRequires : setuptools
 BuildRequires : setuptools-markdown
 Patch1: deps.patch
 
 %description
-wheelhouse-uploader
 ===================
-Upload/download wheels to/from cloud storage using Apache Libcloud. Helps
-package maintainers build wheels for their packages and upload them to PyPI.
+        
+        Upload/download wheels to/from cloud storage using Apache Libcloud.
+        Helps package maintainers build wheels for their packages and upload
+        them to PyPI.
+        
+        The cloud storage containers are typically populated by Continuous
+        Integration servers that generate and test binary packages on various
+        platforms (Windows and OSX for several versions and architectures for
+        Python). At release time the project maintainer can collect all the
+        generated package for a specific version of the project and upload them
+        all at once to PyPI.
+        
+        Installation
+        ------------
 
 %package python
 Summary: python components for the wheelhouse-uploader package.
@@ -59,7 +68,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1558122294
+export SOURCE_DATE_EPOCH=1559109391
+export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
 export FFLAGS="$CFLAGS -fno-lto "
