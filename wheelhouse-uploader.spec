@@ -4,7 +4,7 @@
 #
 Name     : wheelhouse-uploader
 Version  : 0.10.1
-Release  : 6
+Release  : 7
 URL      : https://files.pythonhosted.org/packages/26/d8/e7f674cca65c1abb6e5c1f6d5c724816316e7048eed5d2fdd817fb9e694f/wheelhouse-uploader-0.10.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/26/d8/e7f674cca65c1abb6e5c1f6d5c724816316e7048eed5d2fdd817fb9e694f/wheelhouse-uploader-0.10.1.tar.gz
 Summary  : Upload wheels to any cloud storage supported by Libcloud
