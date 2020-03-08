@@ -4,7 +4,7 @@
 #
 Name     : wheelhouse-uploader
 Version  : 0.10.2
-Release  : 11
+Release  : 12
 URL      : https://files.pythonhosted.org/packages/9e/74/5f2263e576f1a34a84782fd58d7eb80bbe2020e22cdfbe7f4881d58e204a/wheelhouse-uploader-0.10.2.tar.gz
 Source0  : https://files.pythonhosted.org/packages/9e/74/5f2263e576f1a34a84782fd58d7eb80bbe2020e22cdfbe7f4881d58e204a/wheelhouse-uploader-0.10.2.tar.gz
 Summary  : Upload wheels to any cloud storage supported by Libcloud
@@ -25,170 +25,21 @@ BuildRequires : setuptools-markdown
 Patch1: deps.patch
 
 %description
-wheelhouse-uploader
 ===================
-
-Upload/download wheels to/from cloud storage using Apache Libcloud.
-Helps package maintainers build wheels for their packages and upload
-them to PyPI.
-
-The cloud storage containers are typically populated by Continuous
-Integration servers that generate and test binary packages on various
-platforms (Windows and OSX for several versions and architectures for
-Python). At release time the project maintainer can collect all the
-generated package for a specific version of the project and upload them
-all at once to PyPI.
-
-Installation
-------------
-
-.. code:: bash
-
-    pip install wheelhouse-uploader
-
-Usage
------
-
-The canonical use case is:
-
-1. Continuous Integration (CI) workers build and test the project
-   packages for various platforms and versions of Python, for instance
-   using the commands:
-
-:sub:`[STRIKEOUT:bash pip install wheel python setup.py bdist\_wheel]`
-
-2. CI workers use ``wheelhouse-uploader`` to upload the generated
-   artifacts to one or more cloud storage containers (e.g. one container
-   per platform, or one for the master branch and the other for release
-   tags):
-
-:sub:`[STRIKEOUT:bash python -m wheelhouse\_uploader upload
-container\_name]`
-
-3. The project maintainer uses the ``wheelhouse-uploader`` distutils
-   extensions to fetch all the generated build artifacts for a specific
-   version number to its local ``dist`` folder and upload them all at
-   once to PyPI when making a release.
-
-:sub:`[STRIKEOUT:bash python setup.py sdist fetch\_artifacts
-upload\_all]`
-
-Uploading artifact to a cloud storage container
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use the following command:
-
-.. code:: bash
-
-    python -m wheelhouse_uploader upload \
-        --username=mycloudaccountid --secret=xxx \
-        --local-folder=dist/ my_wheelhouse
-
-or:
-
-.. code:: bash
-
-    export WHEELHOUSE_UPLOADER_USERNAME=mycloudaccountid
-    export WHEELHOUSE_UPLOADER_SECRET=xxx
-    python -m wheelhouse_uploader upload --local-folder dist/ my_wheelhouse
-
-When used in a CI setup such as http://travis-ci.org or
-http://appveyor.com, the environment variables are typically configured
-in the CI configuration files such as ``.travis.yml`` or
-``appveyor.yml``. The secret API key is typically encrypted and exposed
-with a ``secure:`` prefix in those files.
-
-The files in the ``dist/`` folder will be uploaded to a container named
-``my_wheelhouse`` on the ``CLOUDFILES`` (Rackspace) cloud storage
-provider.
-
-You can pass a custom ``--provider`` param to select the cloud storage
-from the list of `supported
-providers <https://libcloud.readthedocs.org/en/latest/storage/supported_providers.html>`__.
-
-Assuming the container will be published as a static website using the
-cloud provider CDN options, the ``upload`` command also maintains an
-``index.html`` file with links to all the files previously uploaded to
-the container.
-
-It is recommended to configure the container CDN cache TTL to a shorter
-than usual duration such as 15 minutes to be able to quickly perform a
-release once all artifacts have been uploaded by the CI servers.
-
-Fetching artifacts manually
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The following command downloads items that have been previously
-published to a web page with an index with HTML links to the project
-files:
-
-.. code:: bash
-
-    python -m wheelhouse_uploader fetch \
-        --version=X.Y.Z --local-folder=dist/ \
-        project-name http://wheelhouse.example.org/
-
-Uploading previously archived artifacts to PyPI (deprecated)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**DEPRECATION NOTICE**: while the following still works, you are advised
-to use the alternative tool:
-`twine <https://pypi.python.org/pypi/twine>`__ that makes it easy to
-script uploads of packages to PyPI without messing around with distutils
-and ``setup.py``.
-
-Ensure that the ``setup.py`` file of the project registers the
-``wheelhouse-uploader`` distutils extensions:
-
-.. code:: python
-
-    cmdclass = {}
-
-    try:
-        # Used by the release manager of the project to add support for:
-        # python setup.py sdist fetch_artifacts upload_all
-        import wheelhouse_uploader.cmd
-        cmdclass.update(vars(wheelhouse_uploader.cmd))
-    except ImportError:
-        pass
-    ...
-
-    setup(
-        ...
-        cmdclass=cmdclass,
-    )
-
-Put the URL of the public artifact repositories populated by the CI
-workers in the ``setup.cfg`` file of the project:
-
-.. code:: ini
-
-    [wheelhouse_uploader]
-    artifact_indexes=
-        http://wheelhouse.site1.org/
-        http://wheelhouse.site2.org/
-
-Fetch all the artifacts matching the current version of the project as
-configured in the local ``setup.py`` file and upload them all to PyPI:
-
-.. code:: bash
-
-    python setup.py fetch_artifacts upload_all
-
-Note: this will reuse PyPI credentials stored in ``$HOME/.pypirc`` if
-``python setup.py register`` or ``upload`` were called previously.
-
-TODO
-~~~~
-
--  test on as many cloud storage providers as possible (please send an
-   email to olivier.grisel@ensta.org if you can make it work on a
-   non-Rackspace provider),
--  check that CDN activation works everywhere (it's failing on Rackspace
-   currently: need to investigate) otherwise the workaround is to enable
-   CDN manually in the management web UI,
--  make it possible to fetch private artifacts using the cloud storage
-   protocol instead of HTML index pages.
+        
+        Upload/download wheels to/from cloud storage using Apache Libcloud.
+        Helps package maintainers build wheels for their packages and upload
+        them to PyPI.
+        
+        The cloud storage containers are typically populated by Continuous
+        Integration servers that generate and test binary packages on various
+        platforms (Windows and OSX for several versions and architectures for
+        Python). At release time the project maintainer can collect all the
+        generated package for a specific version of the project and upload them
+        all at once to PyPI.
+        
+        Installation
+        ------------
 
 %package python
 Summary: python components for the wheelhouse-uploader package.
@@ -203,7 +54,11 @@ python components for the wheelhouse-uploader package.
 Summary: python3 components for the wheelhouse-uploader package.
 Group: Default
 Requires: python3-core
-Provides: pypi(wheelhouse-uploader)
+Provides: pypi(wheelhouse_uploader)
+Requires: pypi(apache_libcloud)
+Requires: pypi(certifi)
+Requires: pypi(packaging)
+Requires: pypi(setuptools)
 
 %description python3
 python3 components for the wheelhouse-uploader package.
@@ -219,8 +74,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582902849
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583698633
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
